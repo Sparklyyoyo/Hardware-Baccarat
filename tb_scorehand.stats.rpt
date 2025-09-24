@@ -1,0 +1,192 @@
+Coverage Report by instance with details
+
+=================================================================================
+=== Instance: /tb_scorehand/dut
+=== Design Unit: work.scorehand
+=================================================================================
+Branch Coverage:
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                         6         4         2    66.66%
+
+================================Branch Details================================
+
+Branch Coverage for instance /tb_scorehand/dut
+
+    Line         Item                      Count     Source 
+    ----         ----                      -----     ------ 
+  File scorehand.sv
+------------------------------------IF Branch------------------------------------
+    11                                         4     Count coming in to IF
+    11              1                          2     
+    13              1                          2     
+Branch totals: 2 hits of 2 branches = 100.00%
+
+------------------------------------IF Branch------------------------------------
+    16                                         4     Count coming in to IF
+    16              1                    ***0***     
+    18              1                          4     
+Branch totals: 1 hit of 2 branches = 50.00%
+
+------------------------------------IF Branch------------------------------------
+    21                                         4     Count coming in to IF
+    21              1                    ***0***     
+    23              1                          4     
+Branch totals: 1 hit of 2 branches = 50.00%
+
+
+Statement Coverage:
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Statements                      10         8         2    80.00%
+
+================================Statement Details================================
+
+Statement Coverage for instance /tb_scorehand/dut --
+
+    Line         Item                      Count     Source 
+    ----         ----                      -----     ------ 
+  File scorehand.sv
+    9               1                          4     
+    12              1                          2     
+    14              1                          2     
+    17              1                    ***0***     
+    19              1                          4     
+    22              1                    ***0***     
+    24              1                          4     
+    26              1                          4     
+    27              1                          4     
+    28              1                          4     
+Toggle Coverage:
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Toggles                         52        22        30    42.30%
+
+================================Toggle Details================================
+
+Toggle Coverage for instance /tb_scorehand/dut --
+
+                                              Node      1H->0L      0L->1H  "Coverage"
+                                              ---------------------------------------
+                                            SUM[2]           0           0        0.00 
+                                            SUM[3]           0           1       50.00 
+                                            SUM[4]           0           0        0.00 
+                               internal_card1[1-2]           0           0        0.00 
+                                 internal_card2[0]           0           1       50.00 
+                                 internal_card2[1]           1           0       50.00 
+                                 internal_card2[2]           0           0        0.00 
+                                 internal_card2[3]           0           1       50.00 
+                               internal_card3[0-3]           0           0        0.00 
+                                          total[2]           1           0       50.00 
+                                          total[3]           0           0        0.00 
+                                     total_5bit[2]           1           0       50.00 
+                                   total_5bit[3-4]           0           0        0.00 
+
+Total Node Count     =         26 
+Toggled Node Count   =          8 
+Untoggled Node Count =         18 
+
+Toggle Coverage      =      42.30% (22 of 52 bins)
+
+=================================================================================
+=== Instance: /tb_scorehand
+=== Design Unit: work.tb_scorehand
+=================================================================================
+Branch Coverage:
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                         4         2         2    50.00%
+
+================================Branch Details================================
+
+Branch Coverage for instance /tb_scorehand
+NOTE: The modification timestamp for source file 'tb_scorehand.sv' has been altered since compilation.
+
+    Line         Item                      Count     Source 
+    ----         ----                      -----     ------ 
+  File tb_scorehand.sv
+------------------------------------IF Branch------------------------------------
+    17                                         4     Count coming in to IF
+    17              1                    ***0***     
+    22              1                          4     
+Branch totals: 1 hit of 2 branches = 50.00%
+
+------------------------------------IF Branch------------------------------------
+    64                                         1     Count coming in to IF
+    64              1                    ***0***     
+    66              1                          1     
+Branch totals: 1 hit of 2 branches = 50.00%
+
+
+Statement Coverage:
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Statements                      27        24         3    88.88%
+
+================================Statement Details================================
+
+Statement Coverage for instance /tb_scorehand --
+NOTE: The modification timestamp for source file 'tb_scorehand.sv' has been altered since compilation.
+
+    Line         Item                      Count     Source 
+    ----         ----                      -----     ------ 
+  File tb_scorehand.sv
+    18              1                    ***0***     
+    19              1                    ***0***     
+    23              1                          4     
+    28              1                          1     
+    29              1                          1     
+    30              1                          1     
+    31              1                          1     
+    33              1                          1     
+    35              1                          1     
+    38              1                          1     
+    39              1                          1     
+    40              1                          1     
+    42              1                          1     
+    44              1                          1     
+    47              1                          1     
+    48              1                          1     
+    49              1                          1     
+    51              1                          1     
+    53              1                          1     
+    56              1                          1     
+    57              1                          1     
+    58              1                          1     
+    60              1                          1     
+    62              1                          1     
+    65              1                    ***0***     
+    67              1                          1     
+    69              1                          1     
+Toggle Coverage:
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Toggles                         34        12        22    35.29%
+
+================================Toggle Details================================
+
+Toggle Coverage for instance /tb_scorehand --
+
+                                              Node      1H->0L      0L->1H  "Coverage"
+                                              ---------------------------------------
+                                          card1[0]           1           0       50.00 
+                                          card1[1]           0           0        0.00 
+                                          card1[3]           0           1       50.00 
+                                          card2[0]           0           1       50.00 
+                                          card2[1]           1           0       50.00 
+                                          card2[2]           0           0        0.00 
+                                          card2[3]           0           1       50.00 
+                                        card3[0-3]           0           0        0.00 
+                                               err           0           0        0.00 
+                                          total[2]           1           0       50.00 
+                                          total[3]           0           0        0.00 
+
+Total Node Count     =         17 
+Toggled Node Count   =          3 
+Untoggled Node Count =         14 
+
+Toggle Coverage      =      35.29% (12 of 34 bins)
+
+
+Total Coverage By Instance (filtered view): 62.00%
+

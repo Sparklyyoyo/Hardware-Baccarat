@@ -1,0 +1,27 @@
+Coverage Report Summary Data by instance
+
+=================================================================================
+=== Instance: /tb_card7seg/dut
+=== Design Unit: work.card7seg
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        17        16         1    94.11%
+    Statements                      18        17         1    94.44%
+    Toggles                         14        14         0   100.00%
+
+=================================================================================
+=== Instance: /tb_card7seg
+=== Design Unit: work.tb_card7seg
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Assertions                      16        16         0   100.00%
+    Statements                      32        32         0   100.00%
+    Toggles                         22        21         1    95.45%
+
+
+TOTAL ASSERTION COVERAGE: 100.00%  ASSERTIONS: 16
+
+Total Coverage By Instance (filtered view): 97.33%
+

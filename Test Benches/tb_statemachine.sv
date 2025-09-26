@@ -1,3 +1,14 @@
+/*
+-- File:    tb_statemachine.sv
+-- Module:  tb_statemachine
+-- Brief:   Self-checking testbench for the Baccarat dealing state machine.
+--
+-- Description:
+--   Drives the statemachine through each path dictated by Baccarat rules and
+--   checks the internal `present_state` against expected encodings. Keeps all
+--   names and behavior intact; formatting and comments only.
+*/
+
 `define TWO   7'b0100100
 `define THREE 7'b0110000
 `define FOUR  7'b0011001
@@ -6,7 +17,7 @@
 `define SEVEN 7'b1111000
 `define EIGHT 7'b0000000
 `define NINE  7'b0010000
-`define TEN 7'b1000000
+`define TEN   7'b1000000
 
 `define ACE   7'b0001000
 `define JACK  7'b1100001
@@ -27,58 +38,57 @@
 
 module tb_statemachine();
 
-    logic slow_clock;
-    logic resetb;
+    // --- DUT I/O Signals ---
+    logic       slow_clock;
+    logic       resetb;
     logic [3:0] dscore;
     logic [3:0] pscore;
     logic [3:0] pcard3;
-    logic load_pcard1;
-    logic load_pcard2;
-    logic load_pcard3;
-    logic load_dcard1;
-    logic load_dcard2;
-    logic load_dcard3;
-    logic player_win_light;
-    logic dealer_win_light;
-    logic reset;
-    logic clk;
-    //logic err;
 
+    logic       load_pcard1;
+    logic       load_pcard2;
+    logic       load_pcard3;
+    logic       load_dcard1;
+    logic       load_dcard2;
+    logic       load_dcard3;
+    logic       player_win_light;
+    logic       dealer_win_light;
+    logic       reset;
+    logic       clk;
+
+    // --- Connect DUT ---
     assign resetb = reset;
     assign slow_clock = clk;
-
+    
+    // --- Instantiate the DUT ---
     statemachine dut(.*);
 
+    // --- Task to check expected vs actual state ---
     task check;
-
             input logic [3:0] expected_state;
-
             begin
-                
                 if(tb_statemachine.dut.present_state !== expected_state) begin
                     $error("Error: State is %b, Expected State is %b", tb_statemachine.dut.present_state,expected_state);
-                    //err = 1'b1;
                 end
             end
     endtask
 
+    // --- Clock generation ---
     initial begin
         clk = 1'b0;
         #5;
-
         forever begin
             clk = 1'b1;
             #5;
-
             clk = 1'b0;
             #5;
         end  
     end
 
+    // --- Test sequence ---
     initial begin
-
-        //err = 1'b0;
         reset = 1'b0;
+
         #10;
         $display("Testing reset state - deal_pcard1");
         check(`deal_pcard1);
@@ -383,13 +393,6 @@ module tb_statemachine();
 
         $display("Purpose Fail for coverage");
         check(`deal_dcard1);
-
-        /* Coded out for coverage
-        if(err)
-            $display("FAILED");
-        else
-            $display("PASSED");
-        */
 
         $stop;
     end

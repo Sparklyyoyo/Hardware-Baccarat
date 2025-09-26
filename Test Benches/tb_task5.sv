@@ -1,3 +1,15 @@
+/*
+ * File:    tb_task5.sv
+ * Module:  tb_task5
+ * Brief:   Directed, self-checking testbench for the task5 top-level Baccarat demo.
+ *
+ * Description:
+ *   Drives the design with deterministic card values (via hierarchical force) and
+ *   checks seven-segment outputs and LED fields for player/dealer scores and win
+ *   indicators across multiple “instances” (reset cycles). No functional changes;
+ *   this is formatting and documentation only to improve readability for review.
+ */
+ 
 `define TWO   7'b0100100
 `define THREE 7'b0110000
 `define FOUR  7'b0011001
@@ -6,15 +18,14 @@
 `define SEVEN 7'b1111000
 `define EIGHT 7'b0000000
 `define NINE  7'b0010000
-`define TEN 7'b1000000
+`define TEN   7'b1000000
 
 `define ACE   7'b0001000
 `define JACK  7'b1100001
 `define QUEEN 7'b0011000
 `define KING  7'b0001001
 
-`define EMPTY 7'b1111111
-
+`define EMPTY   7'b1111111
 
 `define deal_pcard1 4'b0001
 `define deal_pcard2 4'b0010
@@ -26,15 +37,11 @@
 
 `define game_ends   4'b0000
 
-
 module tb_task5();
-
-
-    //Inputs
-    logic CLOCK_50;
+    // --- DUT I/O Signals ---
+    logic       CLOCK_50;
     logic [3:0] KEY;
 
-    //Outputs
     logic [9:0] LEDR;
     logic [6:0] HEX5;
     logic [6:0] HEX4;
@@ -43,31 +50,29 @@ module tb_task5();
     logic [6:0] HEX1;
     logic [6:0] HEX0;
 
-    //Logic
-    logic clk;
-    logic reset;
-    //logic err;
+    logic       clk;
+    logic       reset;
     logic [3:0] pscore;
     logic [3:0] dscore;
-    logic player_wins;
-    logic dealer_wins;
+    logic       player_wins;
+    logic       dealer_wins;
 
-    assign KEY[3] = reset;
-    assign KEY[0] = clk;
-    assign pscore = LEDR [3:0];
-    assign dscore = LEDR [7:4];
+    // --- Ongoing Connections ---
+    assign KEY[3]      = reset;
+    assign KEY[0]      = clk;
+    assign pscore      = LEDR [3:0];
+    assign dscore      = LEDR [7:4];
     assign player_wins = LEDR [8];
     assign dealer_wins = LEDR [9];
 
+    // --- Instantiate the DUT ---
     task5 dut(.*);
 
+    // --- Task to check expected vs actual output ---
     task check;
-
         input logic [6:0] out;
         input logic [6:0] expected_output;
-
         begin
-
             if(out !== expected_output) begin
                 $error("Error: Output is %b, Expected Output is %b", out, expected_output);
                 //err = 1'b1;
@@ -75,46 +80,42 @@ module tb_task5();
         end
     endtask
 
+    // --- Slow Clock generation ---
     initial begin
         clk = 1'b0;
         #5;
-
         forever begin
             clk = 1'b1;
             #5;
-
             clk = 1'b0;
             #5;
         end  
     end
 
+    // ---  Fast Clock generation ---
     initial begin
         CLOCK_50 = 1'b0;
         #1;
-
         forever begin
             CLOCK_50 = 1'b1;
             #1;
-
             CLOCK_50 = 1'b0;
             #1;
         end  
     end
 
+    // --- Test sequence ---
     initial begin
 
-        //err = 1'b0;
         KEY[1] = 1'b1;
         KEY[2] = 1'b1;
-
         KEY[1] = 1'b0;
         KEY[2] = 1'b0;
 
         force HEX3[6:3] = 3'b000;
         force HEX3[6:3] = 3'b111;
-
-        force HEX0[4] = 1'b1;
-        force HEX0[4] = 1'b0;
+        force HEX0[4]   = 1'b1;
+        force HEX0[4]   = 1'b0;
 
         release HEX3[6:3];
         release HEX0[4];
@@ -132,13 +133,8 @@ module tb_task5();
         check(pscore, 4'd0);
         check(dscore, 4'd0);
 
-
-
-
         reset = 1'b1;
-        force tb_task5.dut.dp.new_card = 4'd9;
-        #10;
-
+        force tb_task5.dut.dp.new_card = 4'd9; #10;
         $display("Checking that HEX 0 and SCORES are accurate");
         check(HEX0,`NINE);
         check(HEX1,`EMPTY);
@@ -149,12 +145,7 @@ module tb_task5();
         check(pscore, 4'd9);
         check(dscore, 4'd0);
         
-
-
-        
-        force tb_task5.dut.dp.new_card = 4'd7;
-        #10;
-
+        force tb_task5.dut.dp.new_card = 4'd7; #10;
         $display("Checking that HEX 3 and SCORES are accurate");
         check(HEX0,`NINE);
         check(HEX1,`EMPTY);
@@ -165,12 +156,7 @@ module tb_task5();
         check(pscore, 4'd9);
         check(dscore, 4'd7);
         
-
-
-        
-        force tb_task5.dut.dp.new_card = 4'd6;
-        #10;
-
+        force tb_task5.dut.dp.new_card = 4'd6; #10;
         $display("Checking that HEX 1 and SCORES are accurate");
         check(HEX0,`NINE);
         check(HEX1,`SIX);
@@ -180,13 +166,8 @@ module tb_task5();
         check(HEX5,`EMPTY);
         check(pscore, 4'd5);
         check(dscore, 4'd7);
-         
 
-
-        
-        force tb_task5.dut.dp.new_card = 4'd5;
-        #10;
-
+        force tb_task5.dut.dp.new_card = 4'd5; #10;
         $display("Checking that HEX 4 and SCORES are accurate");
         check(HEX0,`NINE);
         check(HEX1,`SIX);
@@ -196,13 +177,8 @@ module tb_task5();
         check(HEX5,`EMPTY);
         check(pscore, 4'd5);
         check(dscore, 4'd2);
-         
 
-
-        
-        force tb_task5.dut.dp.new_card = 4'd3;
-        #10;
-
+        force tb_task5.dut.dp.new_card = 4'd3; #10;
         $display("Checking that deal_pcard3 state, HEX 2 and SCORES are accurate");
         check(HEX0,`NINE);
         check(HEX1,`SIX);
@@ -212,13 +188,8 @@ module tb_task5();
         check(HEX5,`EMPTY);
         check(pscore, 4'd8);
         check(dscore, 4'd2);
-          
 
-
-        
-        force tb_task5.dut.dp.new_card = 4'd13;
-        #10;
-
+        force tb_task5.dut.dp.new_card = 4'd13; #10;
         $display("Checking that deal_dcard3 state, HEX 5 and SCORES are accurate");
         check(HEX0,`NINE);
         check(HEX1,`SIX);
@@ -232,7 +203,7 @@ module tb_task5();
         check(dealer_wins, 1'b0);
 
 
-        //New Instance
+        // --- New Instance ---
         reset = 1'b0;
         #10;
 
@@ -246,12 +217,8 @@ module tb_task5();
         check(pscore, 4'd0);
         check(dscore, 4'd0);
 
-
-
-        
         reset = 1'b1;
-        force tb_task5.dut.dp.new_card = 4'd9;
-        #10;
+        force tb_task5.dut.dp.new_card = 4'd9; #10;
 
         $display("Checking that HEX 0 and PSCORE are accurate");
         check(HEX0,`NINE);
@@ -262,13 +229,8 @@ module tb_task5();
         check(HEX5,`EMPTY);
         check(pscore, 4'd9);
         check(dscore, 4'd0);
-        
 
-
-        
-        force tb_task5.dut.dp.new_card = 4'd7;
-        #10;
-
+        force tb_task5.dut.dp.new_card = 4'd7; #10;
         $display("Checking that HEX 3 and DSCORE are accurate");
         check(HEX0,`NINE);
         check(HEX1,`EMPTY);
@@ -278,12 +240,8 @@ module tb_task5();
         check(HEX5,`EMPTY);
         check(pscore, 4'd9);
         check(dscore, 4'd7);
-        
 
-
-        
-        force tb_task5.dut.dp.new_card = 4'd6;
-        #10;
+        force tb_task5.dut.dp.new_card = 4'd6; #10;
 
         $display("Checking that HEX 1 and PSCORE are accurate");
         check(HEX0,`NINE);
@@ -1534,16 +1492,6 @@ module tb_task5();
         check(player_wins, 1'b1);
         check(dealer_wins, 1'b0);
 
-        /*Removed for coverage 
-        
-        if(err)
-            $display("FAILED");
-        else
-            $display("PASSED");
-        
-        */
-
         $stop;
-
     end
 endmodule

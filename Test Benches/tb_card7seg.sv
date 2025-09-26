@@ -1,3 +1,20 @@
+/*
+--- File:    tb_card7seg.sv
+--- Module:  tb_card7seg
+--- Brief:   Self-checking testbench for the card7seg decoder.
+---
+--- Description:
+---   Drives all 16 possible 4-bit card values (0–15) and checks the
+---   corresponding 7-seg patterns against the expected macros. Exercises
+---   face cards, digits 0–9, and the EMPTY mapping for 14 and 15.
+---
+--- Notes:
+---   • No functional changes to DUT; this bench only formats and asserts.
+---   • Uses simple #10 delays between vector changes for readability.
+---
+--- Author: Joey Negm
+*/
+
 `define TWO   7'b0100100
 `define THREE 7'b0110000
 `define FOUR  7'b0011001
@@ -6,7 +23,7 @@
 `define SEVEN 7'b1111000
 `define EIGHT 7'b0000000
 `define NINE  7'b0010000
-`define TEN 7'b1000000
+`define TEN   7'b1000000
 
 `define ACE   7'b0001000
 `define JACK  7'b1100001
@@ -17,9 +34,11 @@
 
 module tb_card7seg();
 
+    // --- DUT I/O Signals ---
     logic [3:0] card;
     logic [6:0] HEX;
 
+    // --- Instantiate the DUT ---
     card7seg dut(.*);
 
     initial begin
@@ -134,7 +153,6 @@ module tb_card7seg();
             $display("FIFTEEN is Correct");
         else   
             $error("FIFTEEN is Incorrect");
-
     end
 endmodule
 

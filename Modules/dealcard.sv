@@ -1,6 +1,5 @@
-// Lucky you! We are giving you this code for free. There is nothing
-// here you need to add or write.
-
+// DISCLAIMER: Made by UBC Teaching Team - 2024W
+ 
 module dealcard(input logic clock, input logic resetb, output logic [3:0] new_card);
 		  
 logic [3:0] dealer_card;
